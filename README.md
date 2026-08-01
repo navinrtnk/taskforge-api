@@ -1,5 +1,7 @@
 # Task Tracker API (.NET/C#)
 
+[![Tests](https://github.com/navinrtnk/taskforge-api/actions/workflows/tests.yml/badge.svg)](https://github.com/navinrtnk/taskforge-api/actions/workflows/tests.yml)
+
 A REST API with CRUD endpoints built with ASP.NET Core, Entity Framework Core, and SQLite.
 
 ## Install dependencies
@@ -26,6 +28,8 @@ Open `http://localhost:5192/swagger` to explore and test the API. The `tasks.db`
 ```powershell
 dotnet test TaskTrackerApi.Tests/TaskTrackerApi.Tests.csproj
 ```
+
+The same test suite runs automatically in GitHub Actions for every push and pull request.
 
 ## Endpoints
 

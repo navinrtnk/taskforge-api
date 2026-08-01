@@ -1,0 +1,30 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: .NET unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+          cache: true
+          cache-dependency-path: TaskTrackerApi.Tests/TaskTrackerApi.Tests.csproj
+
+      - name: Restore dependencies
+        run: dotnet restore TaskTrackerApi.Tests/TaskTrackerApi.Tests.csproj
+
+      - name: Run tests
+        run: dotnet test TaskTrackerApi.Tests/TaskTrackerApi.Tests.csproj --configuration Release --no-restore
