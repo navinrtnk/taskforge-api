@@ -13,6 +13,12 @@ dotnet run --urls http://localhost:5192
 
 Open `http://localhost:5192/swagger` to explore and test the API. The `tasks.db` SQLite database is created automatically on first launch.
 
+## Run tests
+
+```powershell
+dotnet test TaskTrackerApi.Tests/TaskTrackerApi.Tests.csproj
+```
+
 ## Endpoints
 
 | Method | Route | Purpose |
