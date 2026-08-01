@@ -2,6 +2,14 @@
 
 A REST API with CRUD endpoints built with ASP.NET Core, Entity Framework Core, and SQLite.
 
+## Install dependencies
+
+All dependencies are declared in `TaskTrackerApi.csproj`. Install them with one command:
+
+```powershell
+dotnet restore
+```
+
 ## Run locally
 
 Install the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0), open a terminal in this folder, and run:
