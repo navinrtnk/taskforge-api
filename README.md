@@ -32,11 +32,14 @@ dotnet test TaskTrackerApi.Tests/TaskTrackerApi.Tests.csproj
 | Method | Route | Purpose |
 |---|---|---|
 | `GET` | `/api/tasks` | List tasks; optional `?completed=true` filter |
+| `GET` | `/api/tasks/stats` | Get total, completed, and open task counts |
 | `GET` | `/api/tasks/{id}` | Get one task |
 | `POST` | `/api/tasks` | Create a task |
 | `PUT` | `/api/tasks/{id}` | Update a task |
 | `PATCH` | `/api/tasks/{id}/complete?completed=true` | Set completion |
 | `DELETE` | `/api/tasks/{id}` | Delete a task |
+
+Invalid request bodies return `400 Bad Request` with field-specific validation messages. The API also emits structured informational logs when tasks are created, updated, completed, or deleted; logging levels and providers can be configured through `appsettings.json`.
 
 Example create body:
 

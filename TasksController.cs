@@ -8,7 +8,7 @@ namespace TaskTrackerApi.Controllers;
 
 [ApiController]
 [Route("api/tasks")]
-public class TasksController(TaskDbContext dbContext) : ControllerBase
+public class TasksController(TaskDbContext dbContext, ILogger<TasksController> logger) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<TaskItem>>> GetAll(
@@ -22,6 +22,14 @@ public class TasksController(TaskDbContext dbContext) : ControllerBase
 
         return Ok(await query.OrderByDescending(task => task.CreatedAtUtc)
             .ToListAsync(cancellationToken));
+    }
+
+    [HttpGet("stats")]
+    public async Task<ActionResult<TaskStatsResponse>> GetStats(CancellationToken cancellationToken)
+    {
+        var total = await dbContext.Tasks.CountAsync(cancellationToken);
+        var completed = await dbContext.Tasks.CountAsync(task => task.IsCompleted, cancellationToken);
+        return Ok(new TaskStatsResponse(total, completed, total - completed));
     }
 
     [HttpGet("{id:int}")]
@@ -45,6 +53,7 @@ public class TasksController(TaskDbContext dbContext) : ControllerBase
 
         dbContext.Tasks.Add(task);
         await dbContext.SaveChangesAsync(cancellationToken);
+        logger.LogInformation("Created task {TaskId}", task.Id);
         return CreatedAtAction(nameof(GetById), new { id = task.Id }, task);
     }
 
@@ -60,6 +69,7 @@ public class TasksController(TaskDbContext dbContext) : ControllerBase
         task.IsCompleted = request.IsCompleted;
         task.UpdatedAtUtc = DateTime.UtcNow;
         await dbContext.SaveChangesAsync(cancellationToken);
+        logger.LogInformation("Updated task {TaskId}", task.Id);
         return Ok(task);
     }
 
@@ -73,6 +83,7 @@ public class TasksController(TaskDbContext dbContext) : ControllerBase
         task.IsCompleted = completed;
         task.UpdatedAtUtc = DateTime.UtcNow;
         await dbContext.SaveChangesAsync(cancellationToken);
+        logger.LogInformation("Set task {TaskId} completion to {IsCompleted}", task.Id, completed);
         return Ok(task);
     }
 
@@ -84,6 +95,7 @@ public class TasksController(TaskDbContext dbContext) : ControllerBase
 
         dbContext.Tasks.Remove(task);
         await dbContext.SaveChangesAsync(cancellationToken);
+        logger.LogInformation("Deleted task {TaskId}", task.Id);
         return NoContent();
     }
 
