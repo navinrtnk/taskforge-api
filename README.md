@@ -2,7 +2,7 @@
 
 [![Tests](https://github.com/navinrtnk/taskforge-api/actions/workflows/tests.yml/badge.svg)](https://github.com/navinrtnk/taskforge-api/actions/workflows/tests.yml)
 
-A small REST API for creating and managing tasks, built with ASP.NET Core 8,
+A small REST API for creating and managing tasks, built with ASP.NET Core 10,
 Entity Framework Core, and SQLite.
 
 ```mermaid
@@ -20,7 +20,7 @@ SQLite database is created automatically on first launch.
 
 ## Requirements
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - A terminal, or an IDE with support for `.http` files
 
 ## Get started
